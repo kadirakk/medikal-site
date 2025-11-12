@@ -1,288 +1,134 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Kadir Ak – Sağlık Kartım</title>
-<style>
-  :root{
-    --bg:#f4f8fb;
-    --card:#ffffff;
-    --blue:#0b78d1;
-    --muted:#6b7a86;
-    --accent:#e8f4ff;
-    --radius:12px;
-  }
-  body{margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:#0b2b3a}
-  .container{max-width:1000px;margin:28px auto;padding:20px}
-  .card{background:var(--card);border-radius:var(--radius);box-shadow:0 8px 30px rgba(12,40,60,0.06);overflow:hidden;display:flex;gap:20px}
-  .left{width:300px;padding:22px;background:linear-gradient(180deg,#fff,#fbfdff);border-right:1px solid #eef4f8}
-  .badge{display:inline-block;background:var(--accent);color:var(--blue);padding:8px 10px;border-radius:8px;font-weight:700;margin-bottom:12px}
-  h1.name{font-size:20px;margin:6px 0 6px 0}
-  p.role{margin:0;color:var(--muted);font-size:14px}
-  .kpi{margin-top:14px;display:flex;flex-direction:column;gap:8px}
-  .kpi .item{background:#fff;padding:10px;border-radius:8px;border:1px solid #f0f6fb;color:var(--blue);font-weight:700}
-  .contact{margin-top:14px}
-  .contact a{display:block;color:var(--blue);text-decoration:none;margin-bottom:6px;font-weight:600}
-  .qr{margin-top:16px;padding:12px;background:#fff;border-radius:10px;display:inline-block;border:1px dashed #e1eefb}
-  .right{flex:1;padding:22px}
-  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-  .title{font-size:22px;font-weight:700}
-  .updated{color:var(--muted);font-size:13px}
-  .content{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .box{background:var(--card);padding:12px;border-radius:10px;border:1px solid #f0f6fb;min-height:70px}
-  .box h3{margin:0 0 8px 0;font-size:15px;color:var(--blue)}
-  ul.info{list-style:none;padding:0;margin:0}
-  ul.info li{padding:8px 0;border-bottom:1px dashed #f2f7fb;color:var(--muted);display:flex;justify-content:space-between}
-  .documents a{display:block;text-decoration:none;color:var(--blue);margin-bottom:8px}
-  .actions{margin-top:16px;display:flex;gap:10px}
-  .btn{padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
-  .btn.primary{background:var(--blue);color:#fff}
-  .btn.ghost{background:#fff;border:1px solid #e6f0fb;color:var(--blue)}
-  .small{font-size:13px;color:var(--muted);margin-top:8px}
-  @media(max-width:880px){
-    .card{flex-direction:column}
-    .left{width:100%}
-    .content{grid-template-columns:1fr}
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kadir Ak – Sağlık Kartım</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            color: #222;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #0077b6;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        section {
+            margin-bottom: 1.5rem;
+        }
+        h2 {
+            color: #0077b6;
+            border-bottom: 2px solid #0077b6;
+            padding-bottom: 0.3rem;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            margin-bottom: 0.3rem;
+        }
+        .buttons {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        button {
+            background-color: #0077b6;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            margin: 0.5rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #023e8a;
+        }
+        .emergency {
+            background-color: #ffe5e5;
+            border-left: 5px solid #e63946;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="card">
-      <div class="left" aria-hidden="true">
-        <div class="badge">Hasta Kartı</div>
-        <h1 class="name">Kadir Ak</h1>
-        <p class="role">Kişisel Medikal Profil</p>
-
-        <div class="kpi" id="kpi">
-          <div class="item">Kan Grubu: 0 Rh+
-          <div class="item">Alerjiler: <strong id="alg">—</strong></div>
-          <div class="item">Kronik: <strong id="kr">—</strong></div>
-        </div>
-
-        <div class="contact" id="contact">
-          <a id="phone" href="#">📞 —</a>
-          <a id="email" href="#">✉️ —</a>
-        </div>
-
-        <div class="qr" id="qrwrap" title="QR: hızlı erişim">
-          <div style="font-size:12px;color:#6b7a86">QR ile hızlı erişim</div>
-          <img id="qrimg" src="" alt="qr" style="width:100px;height:100px;margin-top:8px;display:block"/>
-        </div>
-      </div>
-
-      <div class="right">
-        <div class="topbar">
-          <div class="title">Kadir Ak – Sağlık Kartım</div>
-          <div class="updated" id="updated">Güncellendi: —</div>
-        </div>
-
-        <div class="content" id="maincontent">
-          <div class="box" id="overviewBox">
-            <h3>Temel Bilgiler</h3>
-            <ul class="info" id="overviewList">
-              <li>Ad Soyad <span id="name">—</span></li>
-              <li>Doğum Tarihi <span id="dob">—</span></li>
-              <li>TC / Kimlik <span id="tc">—</span></li>
-              <li>Kan Grubu <span id="kb2">—</span></li>
+    <header>Kadir Ak – Sağlık Kartım</header>
+    <main>
+        <section>
+            <h2>🩺 Genel Bilgiler</h2>
+            <ul>
+                <li><b>Ad Soyad:</b> Kadir Ak</li>
+                <li><b>Doğum Tarihi:</b> 20.03.1993</li>
+                <li><b>Kan Grubu:</b> 0 Rh(+)</li>
+                <li><b>Telefon:</b> 0539 728 16 79</li>
             </ul>
-          </div>
+        </section>
 
-          <div class="box" id="quickBox">
-            <h3>Acil Bilgi</h3>
-            <ul class="info" id="quickList">
-              <li>Acil Kişi <span id="emName">—</span></li>
-              <li>Telefon <span id="emPhone">—</span></li>
-              <li>Doktor <span id="emDoc">—</span></li>
+        <section>
+            <h2>💊 Kullandığım İlaçlar</h2>
+            <ul>
+                <li>GAVLUSMET (günde 2 kez)</li>
+                <li>ATOR (günde 1 kez)</li>
+                <li>DELİX (günde 1 kez)</li>
+                <li>FORZİGA (günde 1 kez)</li>
+                <li>TOUJEO 300 (günde 1 kez)</li>
             </ul>
-          </div>
+        </section>
 
-          <div class="box" id="medsBox">
-            <h3>İlaçlar</h3>
-            <ul class="info" id="medsList"><li>—</li></ul>
-          </div>
+        <section>
+            <h2>⚠️ Alerjiler</h2>
+            <ul>
+                <li>MR görüntüleme ilaçlarının tamamı</li>
+                <li>Polen</li>
+            </ul>
+        </section>
 
-          <div class="box" id="allBox">
-            <h3>Alerjiler</h3>
-            <ul class="info" id="allList"><li>—</li></ul>
-          </div>
+        <section>
+            <h2>🏥 Kronik Rahatsızlıklar</h2>
+            <ul>
+                <li>Tip 1 Diyabet</li>
+                <li>Hipertansiyon</li>
+                <li>Uyku apnesi</li>
+            </ul>
+        </section>
 
+        <section>
+            <h2>📋 Son Kontrol Tarihi</h2>
+            <ul>
+                <li>25 Ekim 2025</li>
+            </ul>
+        </section>
+
+        <div class="emergency">
+            <h2>🚨 Acil Bilgi</h2>
+            <ul>
+                <li><b>Acil Kişi:</b> Gülcan Ak</li>
+                <li><b>Telefon:</b> 0552 586 17 52</li>
+            </ul>
         </div>
 
-        <div class="actions">
-          <button class="btn primary" id="shareBtn">Doktorla Paylaş</button>
-          <button class="btn ghost" id="printBtn">Yazdır</button>
+        <div class="buttons">
+            <button onclick="window.location.href='mailto:kadirakk@gmail.com?subject=Kadir%20Ak%20Sağlık%20Bilgileri&body=Merhaba,%20aşağıda%20sağlık%20bilgilerim%20yer%20almaktadır.'">Doktorla Paylaş</button>
+            <button onclick="window.print()">Yazdır / PDF Kaydet</button>
         </div>
-
-        <div class="small">Veriler: <span id="sourceUrl">https://kadirakk.github.io/medikal-site/</span></div>
-      </div>
-    </div>
-  </div>
-
-<script>
-// Configuration
-const SOURCE = 'https://kadirakk.github.io/medikal-site/';
-const SHARE_EMAIL = 'kadir@example.com'; // will open mail client to this address
-
-// Helper: set text safely
-function set(id, text){ const el=document.getElementById(id); if(el) el.textContent = text; }
-
-// Try to fetch text content from SOURCE, fallback to CORS proxy
-async function fetchSource() {
-  try {
-    const res = await fetch(SOURCE, {cache: 'no-store'});
-    if(!res.ok) throw new Error('network');
-    const txt = await res.text();
-    return txt;
-  } catch (e) {
-    // fallback to AllOrigins proxy
-    try {
-      const proxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(SOURCE);
-      const r2 = await fetch(proxy, {cache: 'no-store'});
-      if(!r2.ok) throw new Error('proxy');
-      return await r2.text();
-    } catch (e2) {
-      console.warn('Tüm fetch yöntemleri başarısız:', e2);
-      return null;
-    }
-  }
-}
-
-// Parse the remote HTML string and extract useful fields
-function parseAndPopulate(htmlString){
-  if(!htmlString) return;
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(htmlString, 'text/html');
-
-  // Try to find common fields by tag searching (flexible)
-  const bodyText = doc.body ? doc.body.innerText : '';
-
-  // 1) Name: look for header or h1 or "Hazırlayan:" label
-  let name = '—';
-  const h1 = doc.querySelector('h1');
-  if(h1 && h1.textContent.trim()) name = h1.textContent.trim();
-  else {
-    const lab = doc.querySelector('p');
-    if(lab && lab.textContent.includes('Hazırlayan')) name = lab.textContent.replace('Hazırlayan:','').trim();
-  }
-  set('name', name);
-
-  // 2) Extract all H2 sections and list items as key-values
-  const sections = doc.querySelectorAll('h2');
-  sections.forEach(h2 => {
-    const title = h2.textContent.trim().toLowerCase();
-    const next = h2.nextElementSibling;
-    if(!next) return;
-    // if next is ul or contains lis
-    const lis = next.querySelectorAll ? next.querySelectorAll('li') : [];
-    const texts = Array.from(lis).map(li => li.textContent.trim());
-    if(title.includes('genel') || title.includes('temel')){
-      // try to map common labels
-      texts.forEach(t => {
-        if(t.toLowerCase().includes('doğum')) set('dob', t.split(':')[1] ? t.split(':')[1].trim() : t);
-        if(t.toLowerCase().includes('kan grubu')) set('kb2', t.split(':')[1] ? t.split(':')[1].trim() : t);
-        if(t.toLowerCase().includes('kronik')) set('kr', t.split(':')[1] ? t.split(':')[1].trim() : t);
-      });
-    }
-    if(title.includes('ilaç')){
-      // fill medsList
-      const ml = document.getElementById('medsList'); ml.innerHTML='';
-      texts.forEach(t => { const li=document.createElement('li'); li.textContent = t; ml.appendChild(li); });
-    }
-    if(title.includes('alerji')){
-      const al = document.getElementById('allList'); al.innerHTML='';
-      texts.forEach(t => { const li=document.createElement('li'); li.textContent = t; al.appendChild(li); });
-      // also summary
-      set('alg', texts.join(', ') || '—');
-    }
-    if(title.includes('acil')){
-      texts.forEach(t => {
-        if(t.toLowerCase().includes('telefon')) set('emPhone', t.split(':')[1] ? t.split(':')[1].trim() : t);
-        if(t.toLowerCase().includes('yakın')) set('emName', t.split(':')[1] ? t.split(':')[1].trim() : t);
-        if(t.toLowerCase().includes('doktor')) set('emDoc', t.split(':')[1] ? t.split(':')[1].trim() : t);
-      });
-    }
-  });
-
-  // If parsing of sections didn't yield meds/allergies, fall back to searching for keywords in body text
-  if(document.getElementById('medsList').children.length === 0){
-    const medMatches = bodyText.match(/İlaç[^\n\r]*/gi);
-    if(medMatches) {
-      const ml = document.getElementById('medsList'); ml.innerHTML='';
-      medMatches.forEach(m => { const li=document.createElement('li'); li.textContent = m; ml.appendChild(li); });
-    }
-  }
-
-  // Populate overview fields if available in simple "label: value" format
-  const kvMatches = bodyText.match(/([A-Za-zÇÖÜĞİçöüğışŞ\s]{2,30}):\s*([^\n]+)/g);
-  if(kvMatches){
-    kvMatches.forEach(kv => {
-      const parts = kv.split(':'); if(parts.length<2) return;
-      const key = parts[0].trim().toLowerCase();
-      const val = parts.slice(1).join(':').trim();
-      if(key.includes('doğum')) set('dob', val);
-      if(key.includes('tc')) set('tc', val);
-      if(key.includes('kan grubu')) { set('kb', val); set('kb2', val); }
-      if(key.includes('ad soyad')) set('name', val);
-      if(key.includes('telefon')) { set('emPhone', val); document.getElementById('phone').href='tel:'+val.replace(/\s+/g,''); document.getElementById('phone').textContent='📞 '+val; }
-    });
-  }
-
-  // As last resort, set large text area content to bodyText chunks visible in console (not shown)
-  // update updated time
-  set('updated', 'Güncellendi: ' + new Date().toLocaleString('tr-TR'));
-
-  // build QR (link to SOURCE)
-  const qrImg = document.getElementById('qrimg');
-  const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(SOURCE);
-  qrImg.src = qrUrl;
-  document.getElementById('qrwrap').style.display = 'block';
-
-  // set contact email default
-  const emailEl = document.getElementById('email');
-  emailEl.href = 'mailto:' + SHARE_EMAIL;
-  emailEl.textContent = '✉️ ' + SHARE_EMAIL;
-}
-
-// UI behaviors
-document.getElementById('shareBtn').addEventListener('click', ()=>{
-  const subject = encodeURIComponent('Sağlık Bilgileri - Paylaşım');
-  const bodyLines = [
-    'Merhaba,',
-    '',
-    'Sağlık bilgilerime bu linkten erişebilirsiniz: ' + SOURCE,
-    '',
-    'Kısa özet:',
-    'Kan Grubu: ' + (document.getElementById('kb').textContent || '—'),
-    'Alerjiler: ' + (document.getElementById('alg').textContent || '—'),
-    '',
-    'Saygılar.',
-  ];
-  const body = encodeURIComponent(bodyLines.join('\n'));
-  window.location.href = 'mailto:' + SHARE_EMAIL + '?subject=' + subject + '&body=' + body;
-});
-
-document.getElementById('printBtn').addEventListener('click', ()=>{
-  window.print();
-});
-
-// Main: fetch and populate
-(async ()=>{
-  const text = await fetchSource();
-  if(!text){
-    // show message to user if unable to fetch
-    alert('Uzak siteden veri çekilemedi. Sayfa yine de kullanıma açık; istersen manuel olarak bilgileri gir. (CORS engeli olabilir)');
-    // still set QR and defaults
-    document.getElementById('qrimg').src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(SOURCE);
-    document.getElementById('email').href = 'mailto:' + SHARE_EMAIL;
-    document.getElementById('email').textContent = '✉️ ' + SHARE_EMAIL;
-    document.getElementById('updated').textContent = 'Güncellendi: —';
-    return;
-  }
-  parseAndPopulate(text);
-})();
-
-</script>
+    </main>
 </body>
 </html>
